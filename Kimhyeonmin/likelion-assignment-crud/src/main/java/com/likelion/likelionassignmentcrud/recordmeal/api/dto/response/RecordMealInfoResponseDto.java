@@ -1,7 +1,6 @@
 //10
 package com.likelion.likelionassignmentcrud.recordmeal.api.dto.response;
 
-import com.likelion.likelionassignmentcrud.member.domain.Member;
 import com.likelion.likelionassignmentcrud.recordmeal.domain.RecordMeal;
 import lombok.Builder;
 

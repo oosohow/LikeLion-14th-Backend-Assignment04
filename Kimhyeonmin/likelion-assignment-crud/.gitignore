@@ -35,3 +35,6 @@ out/
 
 ### VS Code ###
 .vscode/
+
+//yml 제거 중요...
+application.yml

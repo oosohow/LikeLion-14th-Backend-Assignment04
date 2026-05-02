@@ -14,7 +14,6 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -24,42 +23,31 @@ import java.util.Map;
 @RequiredArgsConstructor
 
 public class CustomExceptionAdvice {
-
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ApiResTemplate<Void>> handleException(final Exception e) {
-    log.error("Internal Server Error: {}",e.getMessage(),e);
+        log.error("Internal Server Error: {}", e.getMessage(), e);
 
-    ApiResTemplate<Void> response = ApiResTemplate.errorResponse(ErrorCode.INTERNAL_SERVER_ERROR);
-    return ResponseEntity
-            .status(HttpStatus.INTERNAL_SERVER_ERROR)
-            .body(response);
-}
-
-@ExceptionHandler(BusinessException.class)
-public ResponseEntity<ApiResTemplate<Void>> handleBusinessException(BusinessException e) {
-        log.error("CustomException: {}",e.getMessage(),e);
-
-        ApiResTemplate<Void> apiresponse = ApiResTemplate.errorResponse(e.getErrorCode(), e.getMessage());
-        return ResponseEntity
-                .status(e.getErrorCode().getHttpStatus())
-                .body(apiresponse);
-}
-
-@ExceptionHandler(MethodArgumentNotValidException.class)
-        public ResponseEntity<ApiResTemplate<Void>> handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
-
-    Map<String, String> errorMap = new HashMap<>();
-    for (FieldError fieldError : e.getBindingResult().getFieldErrors()) {
-        errorMap.put(fieldError.getField(), fieldError.getDefaultMessage());
+        ApiResTemplate<Void> response = ApiResTemplate.errorResponse(ErrorCode.INTERNAL_SERVER_ERROR);
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
     }
-    return new ResponseEntity<>(
-            ApiResTemplate.errorResponse(
-                    ErrorCode.VALIDATION_EXCEPTION,
-                    ErrorCode.VALIDATION_EXCEPTION.getMessage() + convertMapToString(errorMap)
-            ),
-            HttpStatus.BAD_REQUEST
-    );
-}
+
+    @ExceptionHandler(BusinessException.class)
+    public ResponseEntity<ApiResTemplate<Void>> handleBusinessException(BusinessException e) {
+        log.error("CustomException: {}", e.getMessage(), e);
+
+        ApiResTemplate<Void> apiResponse = ApiResTemplate.errorResponse(e.getErrorCode(), e.getMessage());
+        return ResponseEntity.status(e.getErrorCode().getHttpStatus()).body(apiResponse);
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<ApiResTemplate<Void>> handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
+        Map<String, String> errorMap = new HashMap<>();
+        for (FieldError fieldError : e.getBindingResult().getFieldErrors()) {
+            errorMap.put(fieldError.getField(), fieldError.getDefaultMessage());
+        }
+
+        return new ResponseEntity<>(ApiResTemplate.errorResponse(ErrorCode.VALIDATION_EXCEPTION, ErrorCode.VALIDATION_EXCEPTION.getMessage() + convertMapToString(errorMap)), HttpStatus.BAD_REQUEST);
+    }
 
     private String convertMapToString(Map<String, String> map) {
         StringBuilder sb = new StringBuilder();

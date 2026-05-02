@@ -1,10 +1,6 @@
 //12
 package com.likelion.likelionassignmentcrud.recordmeal.application;
 
-import com.likelion.likelionassignmentcrud.member.api.dto.request.MemberSaveRequestDto;
-import com.likelion.likelionassignmentcrud.member.api.dto.request.MemberUpdateRequestDto;
-import com.likelion.likelionassignmentcrud.member.api.dto.response.MemberInfoResponseDto;
-import com.likelion.likelionassignmentcrud.member.api.dto.response.MemberListResponseDto;
 import com.likelion.likelionassignmentcrud.member.domain.Member;
 import com.likelion.likelionassignmentcrud.member.domain.repository.MemberRepository;
 import com.likelion.likelionassignmentcrud.recordmeal.api.dto.request.RecordMealSaveRequestDto;

@@ -7,12 +7,8 @@ import com.likelion.likelionassignmentcrud.common.template.ApiResTemplate;
 import com.likelion.likelionassignmentcrud.member.api.dto.request.MemberSaveRequestDto;
 import com.likelion.likelionassignmentcrud.member.api.dto.request.MemberUpdateRequestDto;
 import com.likelion.likelionassignmentcrud.member.api.dto.response.MemberInfoResponseDto;
-import com.likelion.likelionassignmentcrud.member.api.dto.response.MemberListResponseDto;
 import com.likelion.likelionassignmentcrud.member.application.MemberService;
-import com.likelion.likelionassignmentcrud.member.domain.Member;
-import com.likelion.likelionassignmentcrud.member.domain.repository.MemberRepository;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -21,15 +17,13 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/member")
 @Tag(name = "멤버 API", description = "멤버 관리 api ")
-public class  MemberController {
+public class MemberController {
     private final MemberService memberService;
 
     @PostMapping
